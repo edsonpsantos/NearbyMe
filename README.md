@@ -1,21 +1,27 @@
 # Nearby - Android with Jetpack Compose App
 
 ## 📱 About this project
-This project is a benefits club mobile application with coupons to use at establishment near you.
+This project is a benefits club mobile application with coupons to use at an establishment near you.
 
 The repository contains all code based on organizing the files and keeping the code as efficient as possible.
 
 ##  🤔 Technologies and Features I will use:
 
 ##App features:
-* API Rest
-* Loading Map
+* Google Maps API
+* Rest API
 * QRCode Reading
 * Custom color theme and loading animations
 
 ##Technical Features:
 * 100% Kotlin
 * Jetpack Componse (ViewCode)
+* MVVM Architecture
+* UIEvent
+* Ktor
+* Coil
+* Google Maps API
+* Navigation (router)
 * Good practices
 
 ##  📱 App screens:
