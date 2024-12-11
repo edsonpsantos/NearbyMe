@@ -1,4 +1,4 @@
-package pt.edsonsantos.nearbyme.data.model
+package pt.edsonsantos.nearbyme.ui.components.category
 
 
 import androidx.annotation.DrawableRes

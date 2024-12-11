@@ -4,14 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import pt.edsonsantos.nearbyme.data.model.Market
 import pt.edsonsantos.nearbyme.ui.screen.HomeScreen
+import pt.edsonsantos.nearbyme.ui.screen.HomeViewModel
 import pt.edsonsantos.nearbyme.ui.screen.MarketDetailsScreen
 import pt.edsonsantos.nearbyme.ui.screen.SplashScreen
 import pt.edsonsantos.nearbyme.ui.screen.WelcomeScreen
@@ -27,6 +32,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             NearbyMeTheme {
                 val navController = rememberNavController()
+                val homeViewModel by viewModels<HomeViewModel>()
+                val homeUIState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
                 NavHost(
                     navController = navController,
@@ -46,9 +53,13 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable<Home> {
-                        HomeScreen(onNavigateToMarketDetails = { selectedMarket ->
-                            navController.navigate(selectedMarket)
-                        })
+                        HomeScreen(
+                            onNavigateToMarketDetails = { selectedMarket ->
+                                navController.navigate(selectedMarket)
+                            },
+                            uiState = homeUIState,
+                            onEvent = homeViewModel::onEvent
+                        )
                     }
 
                     composable<Market> {
@@ -64,7 +75,6 @@ class MainActivity : ComponentActivity() {
 
     }
 }
-
 
 
 @Preview(showBackground = true)

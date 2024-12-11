@@ -9,6 +9,7 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,12 +31,18 @@ import pt.edsonsantos.nearbyme.ui.theme.Gray100
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onNavigateToMarketDetails: (Market)-> Unit
+    uiState: HomeUIState = HomeUIState(),
+    onEvent: (HomeUIEvent) -> Unit,
+    onNavigateToMarketDetails: (Market) -> Unit
 ) {
     val bottomSheetState = rememberBottomSheetScaffoldState()
     var isBottomSheetOpen by remember { mutableStateOf(true) }
 
     val configuration = LocalConfiguration.current
+
+    LaunchedEffect(key1 = true) {
+        onEvent(HomeUIEvent.onFetchCategories)
+    }
 
     if (isBottomSheetOpen) {
         BottomSheetScaffold(
@@ -45,29 +52,39 @@ fun HomeScreen(
             sheetPeekHeight = configuration.screenHeightDp.dp * 0.5f,
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             sheetContent = {
-                NearbyMarketCardList(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    markets = MockMarkets,
-                    onMarketClick = { selectedMarket ->
-                        onNavigateToMarketDetails(selectedMarket)
-                    }
-                )
+
+                if (!uiState.markets.isNullOrEmpty()) {
+                    NearbyMarketCardList(
+                        modifier = modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        markets = uiState.markets,
+                        onMarketClick = { selectedMarket ->
+                            onNavigateToMarketDetails(selectedMarket)
+                        }
+                    )
+                }
             },
             content = {
-                Box(modifier = modifier
-                    .fillMaxSize()
-                    .padding(it)) {
+                Box(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(it)
+                ) {
                     GoogleMap(modifier = modifier.fillMaxSize())
-                    NearbyCategoryFilterChipList(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp)
-                            .align(Alignment.TopStart),
-                        categories = MockCategories,
-                        onSelectedCategoryChange = {},
-                    )
+
+                    if (!uiState.categories.isNullOrEmpty()) {
+                        NearbyCategoryFilterChipList(
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .padding(top = 24.dp)
+                                .align(Alignment.TopStart),
+                            categories = uiState.categories,
+                            onSelectedCategoryChange = { selectedCategory ->
+                                onEvent(HomeUIEvent.onFetchMarkets(selectedCategory.id))
+                            },
+                        )
+                    }
                 }
             }
         )
@@ -77,60 +94,7 @@ fun HomeScreen(
 @Preview
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen(onNavigateToMarketDetails={})
+    HomeScreen(uiState = HomeUIState(), onEvent = {}, onNavigateToMarketDetails = {})
 }
 
-/*
-@Composable
-fun OpenStreetMapView() {
-
-    // AndroidView para renderizar o MapView
-    AndroidView(
-        factory = { context ->
-            Configuration.getInstance().load(context, context.getSharedPreferences("osmdroid", 0))
-
-            MapView(context).apply {
-                setTileSource(org.osmdroid.tileprovider.tilesource.TileSourceFactory.MAPNIK)
-
-                // Configurar o ponto inicial do mapa
-                controller.setZoom(15.0)
-                controller.setCenter(GeoPoint(37.7749, -122.4194))
-
-                // Adicionar um marcador
-                val marker = Marker(this)
-                marker.position = GeoPoint(37.7749, -122.4194)
-                marker.title = "Marcador Exemplo"
-
-                val iconRes: Drawable = context.getDrawable(R.drawable.ic_map_pin)!!
-                val width = 32
-                val height = 32
-                iconRes.setBounds(0, 0, width, height)
-                iconRes.setTint(RedBase.hashCode())
-
-                marker.icon = iconRes
-                overlays.add(marker)
-            }
-        },
-        update = { mapView ->
-            mapView.onResume()
-        },
-        modifier = Modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun OpenStreetMapPreview() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Gray),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Simulação do mapa", color = Color.White)
-        }
-    }
-}
-*/
 

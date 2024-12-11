@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import pt.edsonsantos.nearbyme.R
 import pt.edsonsantos.nearbyme.data.model.Market
 import pt.edsonsantos.nearbyme.ui.theme.Gray100
@@ -45,15 +46,16 @@ fun NearbyMarketCard(
 ) {
 
     Card(modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
-            .background(Gray100)
-            .border(width = 1.dp,
-                    color = Gray200,
-                    shape = RoundedCornerShape(12.dp)
-            ),
-            onClick = {
-                onClick(market)
-            }
+        .clip(RoundedCornerShape(12.dp))
+        .background(Gray100)
+        .border(
+            width = 1.dp,
+            color = Gray200,
+            shape = RoundedCornerShape(12.dp)
+        ),
+        onClick = {
+            onClick(market)
+        }
     ) {
         Row(
             modifier = Modifier
@@ -63,14 +65,14 @@ fun NearbyMarketCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
                     .fillMaxWidth(0.3f)
                     .height(IntrinsicSize.Min)
                     .aspectRatio(ratio = 1f, matchHeightConstraintsFirst = true),
                 contentScale = ContentScale.Crop,
-                painter = painterResource(R.drawable.img_brunch),
+                model = market.cover,
                 contentDescription = "Imagem do estabelecimento"
             )
 
@@ -126,7 +128,8 @@ private fun NearbyMarketCardWithCuponsPreview() {
             latitude = -23.55970,
             longitude = -46.6581,
             address = "Rua dos Restaurantes, 0",
-            phone = "(11) 99999-9999","https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=300"
+            phone = "(11) 99999-9999",
+            "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=300"
         ),
         onClick = {}
     )
@@ -147,7 +150,8 @@ private fun NearbyMarketCardNoCuponsPreview() {
             latitude = -23.55970,
             longitude = -46.6581,
             address = "Rua dos Restaurantes, 0",
-            phone = "(11) 99999-9999","https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=300"
+            phone = "(11) 99999-9999",
+            "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=300"
         ),
         onClick = {}
     )
