@@ -1,4 +1,4 @@
-package pt.edsonsantos.nearbyme.ui.screen
+package pt.edsonsantos.nearbyme.ui.screen.market_details
 
 sealed class MarketDetailsUIEvent {
     data class onFetchRules(val marketId: String): MarketDetailsUIEvent()

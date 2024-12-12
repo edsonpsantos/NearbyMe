@@ -1,15 +1,12 @@
-package pt.edsonsantos.nearbyme.ui.components.category
-
-
 import androidx.annotation.DrawableRes
 import pt.edsonsantos.nearbyme.R
 
 enum class CategoryFilterChipView(
     val description: String,
-    @DrawableRes val icon: Int,
+    @DrawableRes val icon: Int
 ) {
-    ALIMENTAR(description = "Alimentação", icon = R.drawable.ic_tools_kitchen_2),
-    COMPRAR(description = "Compras", icon = R.drawable.ic_shopping_bag),
+    ALIMENTACAO(description = "Alimentação", icon = R.drawable.ic_tools_kitchen_2),
+    COMPRAS(description = "Compras", icon = R.drawable.ic_shopping_bag),
     HOSPEDAGEM(description = "Hospedagem", icon = R.drawable.ic_bed),
     SUPERMERCADO(description = "Supermercado", icon = R.drawable.ic_shopping_cart),
     ENTRETENIMENTO(description = "Cinema", icon = R.drawable.ic_movie),

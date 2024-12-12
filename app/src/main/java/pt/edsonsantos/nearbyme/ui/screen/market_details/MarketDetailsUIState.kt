@@ -1,4 +1,4 @@
-package pt.edsonsantos.nearbyme.ui.screen
+package pt.edsonsantos.nearbyme.ui.screen.market_details
 
 import pt.edsonsantos.nearbyme.data.model.Rules
 

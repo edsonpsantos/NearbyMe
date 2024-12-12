@@ -12,7 +12,8 @@ import pt.edsonsantos.nearbyme.data.model.MarketDetails
 object NearbyMeRemoteDataSource {
 
     private const val LOCALHOST_EMULATOR_BASE_URL = "http://10.0.2.2:3333"
-    private const val BASE_URL = LOCALHOST_EMULATOR_BASE_URL
+    private const val LOCALHOST_PHYSICAL_BASE_URL = "http://192.168.1.254:3333"
+    private const val BASE_URL = LOCALHOST_PHYSICAL_BASE_URL
 
     // HttpGet Buscar categorias
     // HttpGet Buscar Locais por categoryID
@@ -21,7 +22,8 @@ object NearbyMeRemoteDataSource {
 
     suspend fun getCategories(): Result<List<Category>> = try {
 
-        val categories = httpClientAndroid.get("$BASE_URL/categories").body<List<Category>>()
+        val categories = httpClientAndroid.get("$BASE_URL/categories")
+            .body<List<Category>>()
 
         Result.success(categories)
 
@@ -32,7 +34,8 @@ object NearbyMeRemoteDataSource {
     suspend fun getMarkets(categoryId: String): Result<List<Market>> = try {
 
         val markets =
-            httpClientAndroid.get("$BASE_URL/markets/category/${categoryId}").body<List<Market>>()
+            httpClientAndroid.get("$BASE_URL/markets/category/${categoryId}")
+                .body<List<Market>>()
 
         Result.success(markets)
 
@@ -43,7 +46,8 @@ object NearbyMeRemoteDataSource {
     suspend fun getMarketDetails(marketId: String): Result<MarketDetails> = try {
 
         val market =
-            httpClientAndroid.get("$BASE_URL/markets/${marketId}").body<MarketDetails>()
+            httpClientAndroid.get("$BASE_URL/markets/${marketId}")
+                .body<MarketDetails>()
 
         Result.success(market)
 
@@ -52,7 +56,8 @@ object NearbyMeRemoteDataSource {
     }
 
     suspend fun patchCoupon(marketId: String): Result<Coupon> = try {
-        val coupon = httpClientAndroid.patch("$BASE_URL/coupons/${marketId}").body<Coupon>()
+        val coupon = httpClientAndroid.patch("$BASE_URL/coupons/${marketId}")
+            .body<Coupon>()
 
         Result.success(coupon)
 

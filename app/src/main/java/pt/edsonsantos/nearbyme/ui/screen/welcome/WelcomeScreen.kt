@@ -1,4 +1,4 @@
-package pt.edsonsantos.nearbyme.ui.screen
+package pt.edsonsantos.nearbyme.ui.screen.welcome
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

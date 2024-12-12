@@ -1,4 +1,4 @@
-package pt.edsonsantos.nearbyme.ui.screen
+package pt.edsonsantos.nearbyme.ui.screen.market_details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,33 +23,35 @@ class MarketDetailsViewModel : ViewModel() {
 
     private fun fetchCoupon(qrCodeContent: String) {
         viewModelScope.launch {
-            NearbyMeRemoteDataSource.patchCoupon(marketId = qrCodeContent)
-                .onSuccess { coupon ->
+            NearbyMeRemoteDataSource.patchCoupon(marketId = qrCodeContent).fold(
+                onSuccess = { coupon ->
                     _uiState.update { currentUiState ->
                         currentUiState.copy(coupon = coupon.coupon)
                     }
-                }
-                .onFailure {
+                },
+                onFailure = {
                     _uiState.update { currentUiState ->
-                        currentUiState.copy(coupon = null)
+                        currentUiState.copy(coupon = "")
                     }
                 }
+            )
         }
     }
 
     private fun fetchRules(marketId: String) {
         viewModelScope.launch {
-            NearbyMeRemoteDataSource.getMarketDetails(marketId = marketId)
-                .onSuccess { marketDetail ->
+            NearbyMeRemoteDataSource.getMarketDetails(marketId = marketId).fold(
+                onSuccess = { marketDetails ->
                     _uiState.update { currentUiState ->
-                        currentUiState.copy(rules = marketDetail.rules)
+                        currentUiState.copy(rules = marketDetails.rules)
+                    }
+                },
+                onFailure = {
+                    _uiState.update { currentUiState ->
+                        currentUiState.copy(rules = emptyList())
                     }
                 }
-                .onFailure {
-                    _uiState.update { currentUiState ->
-                        currentUiState.copy(rules = null)
-                    }
-                }
+            )
         }
     }
 

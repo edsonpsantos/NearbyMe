@@ -1,4 +1,4 @@
-package pt.edsonsantos.nearbyme.ui.screen
+package pt.edsonsantos.nearbyme.ui.screen.home
 
 sealed class HomeUIEvent {
     data object onFetchCategories: HomeUIEvent()

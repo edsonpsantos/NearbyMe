@@ -1,4 +1,4 @@
-package pt.edsonsantos.nearbyme.ui.screen
+package pt.edsonsantos.nearbyme.ui.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -44,7 +44,7 @@ class HomeViewModel: ViewModel()  {
                     onSuccess = { markets ->
                         currentUiState.copy(
                             markets = markets,
-                            marketLocation = markets.map { market ->
+                            marketLocations = markets.map { market ->
                                 LatLng(market.latitude, market.longitude)
                             }
                         )
@@ -52,7 +52,7 @@ class HomeViewModel: ViewModel()  {
                     onFailure = { _ ->
                         currentUiState.copy(
                             markets = emptyList(),
-                            marketLocation = emptyList()
+                            marketLocations = emptyList()
                         )
                     }
                 )

@@ -1,4 +1,4 @@
-package pt.edsonsantos.nearbyme.ui.screen
+package pt.edsonsantos.nearbyme.ui.screen.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
