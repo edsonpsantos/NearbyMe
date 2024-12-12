@@ -31,7 +31,7 @@ The repository contains all code based on organizing the files and keeping the c
 ![Main Meeting Screen](https://github.com/edsonpsantos/images/blob/main/android_images/NearbyApp/MainScreen.png)
 ![Main Screen List](https://github.com/edsonpsantos/images/blob/main/android_images/NearbyApp/MainScreenList.png)
 ![Details Screen](https://github.com/edsonpsantos/images/blob/main/android_images/NearbyApp/DetailsScreen.png)
-![Localization Screen](https://github.com/edsonpsantos/images/blob/main/android_images/NearbyApp/LocalizationScreen.png)
+
 
 
 
