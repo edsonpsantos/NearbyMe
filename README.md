@@ -32,6 +32,8 @@ The repository contains all code based on organizing the files and keeping the c
 ![Main Screen List](https://github.com/edsonpsantos/images/blob/main/android_images/NearbyApp/MainScreenList.png)
 ![Details Screen](https://github.com/edsonpsantos/images/blob/main/android_images/NearbyApp/DetailsScreen.png)
 
+https://github.com/edsonpsantos/NearbyMe/assets/eb8b5339-0756-41c8-a5da-edfe71785190
+
 
 
 
